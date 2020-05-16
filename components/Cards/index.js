@@ -18,40 +18,73 @@
 // </div>
 //
 // Use your function to create a card for each of the articles and add the card to the DOM.
+function cards(articleHeadline, articleImg, authorName) {
+    const card = document.createElement('div');
+    const headline = document.createElement('div');
+    const author = document.createElement('div');
+    const imgContainer = document.createElement('div');
+    const image = document.createElement('img');
+    const authorsName = document.createElement('span');
+  
+    headline.textContent = articleHeadline;
+    image.src = articleImg;
+    authorsName.textContent = authorName;
+  
+    card.appendChild(headline);
+    card.appendChild(author);
+    author.appendChild(imgContainer);
+    imgContainer.appendChild(image);
+    author.appendChild(authorsName);
+  
+    card.classList.add('card');
+    headline.classList.add('headline');
+    author.classList.add('author');
+    imgContainer.classList.add('img-container');
+    console.log(1)
+    return card;
+  }
 
-function cards(articleHeadline, articleAuthor, articleImg, authorName) {
-  const card = document.createElement('div');
-  const headline = document.createElement('div');
-  const author = document.createElement('div');
-  const imgContainer = document.createElement('div');
-  const image = document.createElement('img');
-  const authorsName = document.createElement('span');
-
-  headline.textContent = 'articleHeadline';
-
-  card.appendChild(headline);
-  card.appendChild(author);
-  author.appendChild(imgContainer);
-  imgContainer.appendChild(image);
-  author.appendChild(authorsName);
-
-  card.classList.add('card');
-  headline.classList.add('headline');
-  author.classList.add('author');
-  imgContainer.classList.add('img-container');
-
-  return card;
-}
+  const cardsContainer = document.querySelector('.cards-container');
 
 axios.get('https://lambda-times-backend.herokuapp.com/articles')
 .then(response => {
     const data = response.data.articles;
-    // console.log(Array.from(data));
-    // console.log(data);
-
-    for (let item in data) {
-        // console.log(item.hasOwnProperty(headline));
-    }
+    console.log(data);
+    data.bootstrap.forEach(item => {
+        cardsContainer.appendChild(cards(
+            item.headline,
+            item.authorPhoto,
+            item.authorName
+        ));
+    });
+    data.javascript.forEach(item => {
+        cardsContainer.appendChild(cards(
+            item.headline,
+            item.authorPhoto,
+            item.authorName
+        ));
+    });
+    data.technology.forEach(item => {
+        cardsContainer.appendChild(cards(
+            item.headline,
+            item.authorPhoto,
+            item.authorName
+        ));
+    });
+    data.jquery.forEach(item => {
+        cardsContainer.appendChild(cards(
+            item.headline,
+            item.authorPhoto,
+            item.authorName
+        ));
+    });
+    data.node.forEach(item => {
+        cardsContainer.appendChild(cards(
+            item.headline,
+            item.authorPhoto,
+            item.authorName
+        ));
+    });
 
 })
 .catch(err => {
